@@ -1,5 +1,13 @@
 import React from 'react';
 
-const App = () => <div></div>;
+import Router from './components/common/Router';
+import { GlobalStyle } from './styles/globalStyle';
+
+const App = () => (
+  <div>
+    <GlobalStyle />
+    <Router />
+  </div>
+);
 
 export default App;
