@@ -16,7 +16,17 @@ type SignUpData = {
   id: number;
   domain: string;
 };
+
 export interface SignUpResInfo {
   status: string;
   data: SignUpData;
+}
+
+type SignInData = {
+  accessToken: string;
+  refreshToken: string;
+};
+export interface SignInInfo {
+  status: string;
+  data: SignInData;
 }
