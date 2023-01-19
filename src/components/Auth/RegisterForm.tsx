@@ -16,8 +16,8 @@ interface RegisterInfo {
 
 const RegisterForm = () => {
   const [openEmail, setOpenEmail] = useState(false);
-  const [codeMessage, setCodeMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [codeMsg, setCodeMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
   const [checkPassword, setCheckPassword] = useState(false);
 
   const { register, watch, handleSubmit } = useForm<RegisterInfo>();
@@ -26,7 +26,7 @@ const RegisterForm = () => {
 
   const handleDuplicateUser = async () => {
     const res = await getDuplicateUser(watch('username'));
-    res?.data ? setErrorMessage('아이디가 중복됩니다.') : setErrorMessage('사용가능한 아이디 입니다.');
+    res?.data ? setErrorMsg('아이디가 중복됩니다.') : setErrorMsg('사용가능한 아이디 입니다.');
   };
 
   const handleCheckPassword = () => {
@@ -40,7 +40,7 @@ const RegisterForm = () => {
 
   const handleCheckCode = async () => {
     const res = await postEmailCode(watch('email'), watch('code'));
-    res?.data ? setCodeMessage('인증코드가 일치합니다.') : setCodeMessage('인증코드가 일치하지 않습니다.');
+    res?.data ? setCodeMsg('인증코드가 일치합니다.') : setCodeMsg('인증코드가 일치하지 않습니다.');
   };
 
   const handleSignUp = async () => {
@@ -68,7 +68,7 @@ const RegisterForm = () => {
             </DuplicateBtn>
           </DuplicateBlock>
         </InputBlock>
-        <ErrorMessageBlock>{errorMessage}</ErrorMessageBlock>
+        <ErrorMsgBlock>{errorMsg}</ErrorMsgBlock>
         <InputBlock>
           <InputLabelText>비밀번호</InputLabelText>
           <StyledInput
@@ -86,7 +86,7 @@ const RegisterForm = () => {
             {...register('passwordConfirm', { required: true })}
           />
         </InputBlock>
-        {checkPassword && <ErrorMessageBlock>비밀번호가 일치하지 않습니다.</ErrorMessageBlock>}
+        {checkPassword && <ErrorMsgBlock>비밀번호가 일치하지 않습니다.</ErrorMsgBlock>}
         <InputBlock>
           <InputLabelText>이메일</InputLabelText>
           <DuplicateBlock>
@@ -106,7 +106,7 @@ const RegisterForm = () => {
             </DuplicateBlock>
           </InputBlock>
         )}
-        <ErrorMessageBlock>{codeMessage}</ErrorMessageBlock>
+        <ErrorMsgBlock>{codeMsg}</ErrorMsgBlock>
         <SubmitBtn type="submit">회원가입</SubmitBtn>
       </RegisterFormBlock>
     </RegisterFormWrapper>
@@ -195,7 +195,7 @@ const StyledInput = styled.input`
     border: 2px solid ${({ theme }) => theme.colors.Kakao_Color_Yellow};
   }
 `;
-const ErrorMessageBlock = styled.div`
+const ErrorMsgBlock = styled.div`
   color: red;
   font-weight: bold;
 
