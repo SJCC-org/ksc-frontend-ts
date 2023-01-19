@@ -8,9 +8,9 @@ const Header = () => (
     </HeaderTitle>
     <HeaderButtonBlock>
       <HelpBtnBlock>
-        <HelpBtn type="button">문의사항</HelpBtn>
+        <HeaderBtn type="button">문의사항</HeaderBtn>
       </HelpBtnBlock>
-      <AuthBtn type="button">로그인</AuthBtn>
+      <HeaderBtn type="button">로그인</HeaderBtn>
     </HeaderButtonBlock>
   </HeaderWrapper>
 );
@@ -61,25 +61,10 @@ const HeaderButtonBlock = styled.div`
 const HelpBtnBlock = styled.div`
   border-right: 2px solid ${({ theme }) => theme.colors.Kakao_Color_Yellow};
 `;
-const HelpBtn = styled.button`
+
+const HeaderBtn = styled.button`
   border: none;
   background-color: transparent;
-  color: ${({ theme }) => theme.colors.Kakao_Color_Brown};
-  font-size: 18px;
-  font-weight: bold;
-
-  cursor: pointer;
-
-  @media (max-width: 460px) {
-    padding: 0.5rem 0.7rem;
-
-    font-size: 16px;
-  }
-`;
-const AuthBtn = styled.button`
-  border: none;
-  background-color: transparent;
-  padding-left: 0.5rem;
   color: ${({ theme }) => theme.colors.Kakao_Color_Brown};
   font-size: 18px;
   font-weight: bold;
