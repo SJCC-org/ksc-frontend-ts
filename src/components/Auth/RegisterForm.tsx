@@ -45,12 +45,20 @@ const RegisterForm = () => {
 
   const handleEmailAuthentication = async () => {
     const res = await postEmailAuthentication(watch('email'));
-    res?.status && setOpenEmail(!openEmail);
+    if (res?.status) {
+      setOpenEmail(!openEmail);
+      setCodeMsg('');
+    }
   };
 
   const handleCheckCode = async () => {
     const res = await postEmailCode(watch('email'), watch('code'));
-    res?.data ? setCodeMsg('인증코드가 일치합니다.') : setCodeMsg('인증코드가 일치하지 않습니다.');
+    if (res?.data) {
+      setCodeMsg('인증코드가 일치합니다.');
+    } else {
+      setCodeMsg('인증코드가 일치하지 않습니다.');
+      setOpenEmail(!openEmail);
+    }
   };
 
   const handleSignUp = async () => {
