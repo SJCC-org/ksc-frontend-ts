@@ -9,6 +9,7 @@ declare module 'styled-components' {
       Kakao_Color_Gray_3: string;
       Kakao_Color_Black: string;
       Kakao_Color_Brown: string;
+      Error_Color_Red: string;
     };
   }
 }
