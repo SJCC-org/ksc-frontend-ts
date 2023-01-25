@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { postSignIn } from '../../lib/api/auth';
+import { ErrorMsg } from '../common';
 
 interface LoginInfo {
   username: string;
@@ -45,7 +46,7 @@ const LoginForm = ({ setIsOpenLogin }: LoginProps) => {
         <LoginFormBlock onSubmit={handleSubmit(handleSignIn)}>
           <StyledInput type="text" placeholder="아이디를 입력해주세요" {...register('username')} />
           <StyledInput type="password" placeholder="비밀번호를 입력해주세요" {...register('password')} />
-          <ErrorMsgBlock>{loginErrorMsg}</ErrorMsgBlock>
+          <ErrorMsg errorMsg={loginErrorMsg} />
           <LoginBtn type="submit">로그인</LoginBtn>
         </LoginFormBlock>
         <ExtraInfo>
@@ -157,12 +158,4 @@ const ExtraRegisterSpan = styled.span`
   text-decoration: underline;
   text-underline-position: under;
   cursor: pointer;
-`;
-const ErrorMsgBlock = styled.div`
-  margin-bottom: 0.3rem;
-
-  color: red;
-  font-weight: bold;
-
-  text-align: center;
 `;

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { getDuplicateUser, postEmailAuthentication, postEmailCode, postSignUp } from '../../lib/api/auth';
+import { ErrorMsg } from '../common';
 
 interface RegisterInfo {
   name: string;
@@ -17,20 +18,29 @@ interface RegisterInfo {
 const RegisterForm = () => {
   const [openEmail, setOpenEmail] = useState(false);
   const [codeMsg, setCodeMsg] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState({
+    useableNameMsg: '',
+    checkPasswordMsg: '',
+  });
   const [checkPassword, setCheckPassword] = useState(false);
 
   const { register, watch, handleSubmit } = useForm<RegisterInfo>();
+  const { useableNameMsg, checkPasswordMsg } = errorMsg;
 
   const navigate = useNavigate();
 
   const handleDuplicateUser = async () => {
     const res = await getDuplicateUser(watch('username'));
-    res?.data ? setErrorMsg('아이디가 중복됩니다.') : setErrorMsg('사용가능한 아이디 입니다.');
+    res?.data
+      ? setErrorMsg({ ...errorMsg, useableNameMsg: '아이디가 중복됩니다.' })
+      : setErrorMsg({ ...errorMsg, useableNameMsg: '사용가능한 아이디 입니다.' });
   };
 
   const handleCheckPassword = () => {
-    if (watch('password') !== watch('passwordConfirm')) setCheckPassword(!checkPassword);
+    if (watch('password') !== watch('passwordConfirm')) {
+      setCheckPassword(!checkPassword);
+      setErrorMsg({ ...errorMsg, checkPasswordMsg: '비밀번호가 일치하지 않습니다.' });
+    }
   };
 
   const handleEmailAuthentication = async () => {
@@ -68,7 +78,7 @@ const RegisterForm = () => {
             </DuplicateBtn>
           </DuplicateBlock>
         </InputBlock>
-        <ErrorMsgBlock>{errorMsg}</ErrorMsgBlock>
+        <ErrorMsg errorMsg={useableNameMsg} />
         <InputBlock>
           <InputLabelText>비밀번호</InputLabelText>
           <StyledInput
@@ -86,7 +96,7 @@ const RegisterForm = () => {
             {...register('passwordConfirm', { required: true })}
           />
         </InputBlock>
-        {checkPassword && <ErrorMsgBlock>비밀번호가 일치하지 않습니다.</ErrorMsgBlock>}
+        {checkPassword && <ErrorMsg errorMsg={checkPasswordMsg} />}
         <InputBlock>
           <InputLabelText>이메일</InputLabelText>
           <DuplicateBlock>
@@ -106,7 +116,7 @@ const RegisterForm = () => {
             </DuplicateBlock>
           </InputBlock>
         )}
-        <ErrorMsgBlock>{codeMsg}</ErrorMsgBlock>
+        <ErrorMsg errorMsg={codeMsg} />
         <SubmitBtn type="submit">회원가입</SubmitBtn>
       </RegisterFormBlock>
     </RegisterFormWrapper>
@@ -194,10 +204,4 @@ const StyledInput = styled.input`
   &:focus {
     border: 2px solid ${({ theme }) => theme.colors.Kakao_Color_Yellow};
   }
-`;
-const ErrorMsgBlock = styled.div`
-  color: red;
-  font-weight: bold;
-
-  text-align: center;
 `;
