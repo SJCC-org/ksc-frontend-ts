@@ -8,6 +8,7 @@ const colors = {
   Kakao_Color_Black: '#333333',
   Kakao_Color_Brown: '#3A1D1D',
   Error_Color_Red: '#FF0000',
+  Background_Color_White: '#FFFFFF',
 };
 
 const theme: DefaultTheme = {

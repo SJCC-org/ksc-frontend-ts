@@ -10,6 +10,7 @@ declare module 'styled-components' {
       Kakao_Color_Black: string;
       Kakao_Color_Brown: string;
       Error_Color_Red: string;
+      Background_Color_White: string;
     };
   }
 }
